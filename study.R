@@ -1,6 +1,7 @@
 rm(list=ls())
 library(tidymodels)
 library(RColorBrewer)
+library(ggpmisc)
 
 # library(showtext)
 # font_add_google("Special Elite", family = "special")
@@ -8,6 +9,8 @@ library(RColorBrewer)
 # font_add_google("Cabin", family = "Cabin")
 # showtext_auto()
 
+
+# Read data
 df <- read.csv(file='data/european_wholesale_electricity_price_data_hourly.csv',
                header=T, col.names=c("X","Country","ISO3_code","DateTime_UTC","DateTime_Local","Price_EUR"))
 
@@ -42,8 +45,8 @@ df %>%
   ggplot(aes(x=date))+
   geom_ribbon(aes(ymin=daily_price_min, ymax=daily_price_max), fill=brewer.pal(7, "Blues")[3])+
   geom_line(aes(y=daily_price_eur), color=brewer.pal(9, "Blues")[9], size=0.8)+
-  stat_peaks(aes(y=daily_price_eur), colour=brewer.pal(8, "Dark2")[7], geom="text",
-             hjust=-0.2, vjust=-0.6, ignore_threshold=0.75, position="identity", size=2)+
+  stat_peaks(aes(y=daily_price_eur), colour=brewer.pal(11, "RdYlGn")[2], geom="text",
+             hjust=0.6, vjust=-3, ignore_threshold=0.75, position="identity", size=2)+
   
   xlab('Date') + ylab('Price [Euro/MWH]')+
   labs(title = 'Price of electricity in Switzerland (2022)', subtitle = 'Source (Ember-climate)')+
@@ -57,6 +60,6 @@ df %>%
 
 
 # Save plot
-ggsave("plot_2022.png",
+ggsave("Plots/plot_2022.png",
        width = 1920, height = 1080, dpi = 300, units = "px")
 
